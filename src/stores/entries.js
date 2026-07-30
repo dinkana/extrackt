@@ -117,21 +117,6 @@ export const useEntriesStore = defineStore('entries', () => {
     return { success: true }
   }
 
-  function cleanupOldEntries(retentionDays) {
-    if (!storageAvailable || !retentionDays || retentionDays <= 0) return
-
-    const cutoff = new Date()
-    cutoff.setDate(cutoff.getDate() - retentionDays)
-    const cutoffStr = getLocalISODate(cutoff)
-
-    const initialLength = entries.value.length
-    entries.value = entries.value.filter(entry => entry.date >= cutoffStr)
-
-    if (entries.value.length !== initialLength) {
-      saveEntries()
-    }
-  }
-
   function clearAll() {
     entries.value = []
     if (storageAvailable) {
@@ -145,7 +130,6 @@ export const useEntriesStore = defineStore('entries', () => {
     storageStatus,
     getEntryByDate,
     upsertEntry,
-    cleanupOldEntries,
     clearAll
   }
 })

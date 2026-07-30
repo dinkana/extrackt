@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full max-w-[300px] mx-auto aspect-square">
+  <div class="relative w-full max-w-[380px] mx-auto aspect-square">
     <svg 
       viewBox="0 0 200 200" 
       class="w-full h-full touch-none" 
@@ -8,11 +8,11 @@
       @pointercancel="onPointerUp"
     >
       <g v-for="level in 5" :key="level">
-        <polygon :points="getPolygonPoints(level)" fill="none" stroke="currentColor" class="text-gray-200 dark:text-gray-700" stroke-width="0.5" />
+        <polygon :points="getPolygonPoints(level)" fill="none" stroke="currentColor" class="text-gray-700" stroke-width="0.5" />
       </g>
       
       <g v-for="i in 5" :key="i">
-        <line :x1="100" :y1="100" :x2="getPoint(100, i).x" :y2="getPoint(100, i).y" stroke="currentColor" class="text-gray-200 dark:text-gray-700" stroke-width="0.5" />
+        <line :x1="100" :y1="100" :x2="getPoint(100, i).x" :y2="getPoint(100, i).y" stroke="currentColor" class="text-gray-700" stroke-width="0.5" />
       </g>
 
       <polygon :points="dataPoints" fill="url(#gradient)" fill-opacity="0.4" stroke="#8B5CF6" stroke-width="2" />
@@ -33,7 +33,7 @@
           :y="getPoint(125, index).y" 
           text-anchor="middle" 
           dominant-baseline="middle"
-          class="text-[10px] font-medium fill-gray-600 dark:fill-gray-300 select-none"
+          class="text-[10px] font-medium fill-gray-400 select-none"
         >
           {{ criterion.label }}
         </text>
@@ -43,7 +43,7 @@
           :y="getPoint(142, index).y" 
           text-anchor="middle" 
           dominant-baseline="middle"
-          class="text-[12px] font-bold fill-gray-900 dark:fill-gray-100 select-none"
+          class="text-[12px] font-bold fill-gray-100 select-none"
         >
           {{ values[criterion.key] }}
         </text>
@@ -69,7 +69,7 @@ const props = defineProps({
 const emit = defineEmits(['update'])
 
 const ui = useUiStore()
-const cx = 100, cy = 100, maxR = 80
+const cx = 100, cy = 100, maxR = 90
 
 const criteria = [
   { key: 'sleep', label: 'Сон' },

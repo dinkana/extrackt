@@ -6,7 +6,7 @@
       <SettingsView v-else-if="ui.currentView === 'settings'" />
     </main>
 
-    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 flex justify-around h-16 items-center shadow-lg">
+    <nav class="fixed bottom-0 left-0 right-0 bg-gray-800 border-t border-gray-700 flex justify-around h-16 items-center shadow-lg">
       <button
         @click="ui.currentView = 'home'"
         :class="navClass('home')"
@@ -38,7 +38,6 @@
 import { defineAsyncComponent, onMounted } from 'vue'
 import { useUiStore } from './stores/ui'
 import { useEntriesStore } from './stores/entries'
-import { useSettingsStore } from './stores/settings'
 import HomeView from './views/HomeView.vue'
 
 const AnalyticsView = defineAsyncComponent(() => import('./views/AnalyticsView.vue'))
@@ -46,15 +45,11 @@ const SettingsView = defineAsyncComponent(() => import('./views/SettingsView.vue
 
 const ui = useUiStore()
 const entriesStore = useEntriesStore()
-const settingsStore = useSettingsStore()
 
 onMounted(() => {
   if (!entriesStore.storageAvailable) {
     alert('Ваш браузер не поддерживает локальное хранение')
-    return
   }
-
-  entriesStore.cleanupOldEntries(settingsStore.settings.dataRetentionDays)
 })
 
 const navClass = view => [

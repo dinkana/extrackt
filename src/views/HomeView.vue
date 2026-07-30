@@ -1,36 +1,36 @@
 <template>
   <div class="space-y-6">
     <header class="flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">extrackt</h1>
-      <span class="text-sm text-gray-500 dark:text-gray-400">{{ formattedDate }}</span>
+      <h1 class="text-2xl font-bold text-gray-100">extrackt</h1>
+      <span class="text-sm text-gray-400">{{ formattedDate }}</span>
     </header>
 
     <div
       v-if="!entriesStore.storageAvailable"
-      class="p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-[12px] text-sm text-red-800 dark:text-red-200"
+      class="p-4 bg-red-900/30 border border-red-800 rounded-[12px] text-sm text-red-200"
     >
       Ваш браузер не поддерживает локальное хранение
     </div>
 
     <div
       v-else-if="entriesStore.storageStatus.isWarning"
-      class="p-4 bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-800 rounded-[12px] text-sm text-yellow-800 dark:text-yellow-200"
+      class="p-4 bg-yellow-900/30 border border-yellow-800 rounded-[12px] text-sm text-yellow-200"
     >
       Память заполнена. Экспортируйте данные в XLSX и очистите историю.
     </div>
 
     <div
       v-else-if="entriesStore.storageStatus.isCritical && !existingEntry"
-      class="p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-[12px] text-sm text-red-800 dark:text-red-200"
+      class="p-4 bg-red-900/30 border border-red-800 rounded-[12px] text-sm text-red-200"
     >
       Критический предел. Новые записи заблокированы. Экспортируйте и удалите данные.
     </div>
 
     <PentagonChart :values="currentValues" @update="onChartUpdate" />
 
-    <div class="space-y-4 bg-white dark:bg-gray-800 p-5 rounded-[16px] shadow-sm">
+    <div class="space-y-4 bg-gray-800 p-5 rounded-[16px] shadow-sm">
       <div v-for="criterion in criteria" :key="criterion.key" class="flex items-center gap-4">
-        <label class="w-28 text-sm font-medium text-gray-900 dark:text-gray-200">{{ criterion.label }}</label>
+        <label class="w-28 text-sm font-medium text-gray-200">{{ criterion.label }}</label>
 
         <input
           type="range"
@@ -40,16 +40,16 @@
           :value="currentValues[criterion.key]"
           @input="onSliderInput(criterion.key, $event)"
           :disabled="isBlocked"
-          class="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-violet-500 disabled:opacity-50"
+          class="flex-1 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-violet-500 disabled:opacity-50"
         />
 
-        <span class="w-6 text-center font-bold text-gray-900 dark:text-gray-100 tabular-nums">
+        <span class="w-6 text-center font-bold text-gray-100 tabular-nums">
           {{ currentValues[criterion.key] }}
         </span>
       </div>
     </div>
 
-    <div class="text-center text-xs text-gray-500 dark:text-gray-400 h-4 transition-opacity">
+    <div class="text-center text-xs text-gray-400 h-4 transition-opacity">
       {{ saveStatus }}
     </div>
   </div>
