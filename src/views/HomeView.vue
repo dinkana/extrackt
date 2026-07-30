@@ -9,21 +9,21 @@
       v-if="!entriesStore.storageAvailable"
       class="p-4 bg-red-900/30 border border-red-800 rounded-[12px] text-sm text-red-200"
     >
-      Ваш браузер не поддерживает локальное хранение
+      Your browser does not support local storage
     </div>
 
     <div
       v-else-if="entriesStore.storageStatus.isWarning"
       class="p-4 bg-yellow-900/30 border border-yellow-800 rounded-[12px] text-sm text-yellow-200"
     >
-      Память заполнена. Экспортируйте данные в XLSX и очистите историю.
+      Storage is running low. Export your data and clear history.
     </div>
 
     <div
       v-else-if="entriesStore.storageStatus.isCritical && !existingEntry"
       class="p-4 bg-red-900/30 border border-red-800 rounded-[12px] text-sm text-red-200"
     >
-      Критический предел. Новые записи заблокированы. Экспортируйте и удалите данные.
+      Storage limit reached. Export and delete data to continue.
     </div>
 
     <PentagonChart :values="currentValues" @update="onChartUpdate" />
@@ -31,7 +31,6 @@
     <div class="space-y-4 bg-gray-800 p-5 rounded-[16px] shadow-sm">
       <div v-for="criterion in criteria" :key="criterion.key" class="flex items-center gap-4">
         <label class="w-28 text-sm font-medium text-gray-200">{{ criterion.label }}</label>
-
         <input
           type="range"
           min="1"
@@ -42,7 +41,6 @@
           :disabled="isBlocked"
           class="flex-1 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-violet-500 disabled:opacity-50"
         />
-
         <span class="w-6 text-center font-bold text-gray-100 tabular-nums">
           {{ currentValues[criterion.key] }}
         </span>
@@ -66,17 +64,23 @@ const entriesStore = useEntriesStore()
 const ui = useUiStore()
 
 const criteria = [
-  { key: 'sleep', label: 'Сон' },
-  { key: 'energy', label: 'Бодрость' },
-  { key: 'mood', label: 'Настроение' },
-  { key: 'productivity', label: 'Продуктивность' },
-  { key: 'body', label: 'Тело' }
+  { key: 'sleep', label: 'Sleep' },
+  { key: 'energy', label: 'Energy' },
+  { key: 'mood', label: 'Mood' },
+  { key: 'productivity', label: 'Focus' },
+  { key: 'body', label: 'Body' }
 ]
 
-const defaultValues = { sleep: 3, energy: 3, mood: 3, productivity: 3, body: 3 }
+const defaultValues = {
+  sleep: 3,
+  energy: 3,
+  mood: 3,
+  productivity: 3,
+  body: 3
+}
+
 const currentValues = ref({ ...defaultValues })
 const saveStatus = ref('')
-
 let debounceTimer = null
 
 const existingEntry = computed(() => entriesStore.getEntryByDate(ui.selectedDate))
@@ -89,7 +93,7 @@ const isBlocked = computed(() => {
 
 const formattedDate = computed(() => {
   const date = parseISODate(ui.selectedDate)
-  return date.toLocaleDateString('ru-RU', {
+  return date.toLocaleDateString('en-US', {
     day: '2-digit',
     month: 'long',
     year: 'numeric'
@@ -98,7 +102,6 @@ const formattedDate = computed(() => {
 
 onMounted(() => {
   ui.selectedDate = getLocalISODate()
-
   const existing = entriesStore.getEntryByDate(ui.selectedDate)
   if (existing) {
     currentValues.value = {
@@ -128,11 +131,11 @@ function onChartUpdate(newValues) {
 
 function triggerSave() {
   if (isBlocked.value) {
-    saveStatus.value = 'Сохранение заблокировано'
+    saveStatus.value = 'Saving blocked'
     return
   }
 
-  saveStatus.value = 'Изменения...'
+  saveStatus.value = 'Saving...'
   clearTimeout(debounceTimer)
 
   debounceTimer = setTimeout(() => {
@@ -142,11 +145,11 @@ function triggerSave() {
     })
 
     if (result.success) {
-      saveStatus.value = 'Сохранено'
+      saveStatus.value = 'Saved'
     } else if (result.error === 'quota') {
-      saveStatus.value = 'Память заполнена'
+      saveStatus.value = 'Storage full'
     } else {
-      saveStatus.value = 'Сохранение заблокировано'
+      saveStatus.value = 'Saving blocked'
     }
 
     setTimeout(() => {

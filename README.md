@@ -1,5 +1,36 @@
-# Vue 3 + Vite
+A lightweight daily state tracker for people who want to understand their patterns without the noise.
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Track five key metrics every day: Sleep, Energy, Mood, Body, and Focus. Visualize your data, spot trends, and export everything to XLSX when you need it. No accounts, no servers, no subscriptions. Your data stays on your device.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## What it does
+
+- **Daily tracking** — Rate your day across five dimensions on a 1–5 scale
+- **Visual history** — See your trends over weeks, months, or years
+- **Export anytime** — Download your data as an XLSX file
+- **Works offline** — No internet required, ever
+- **Privacy-first** — All data stored locally in your browser
+
+## Quick start
+
+```bash
+npm install
+npm run dev
+```
+
+Open the app in your browser. Start tracking. That's it.
+
+## Build for production
+
+```bash
+npm run build
+```
+
+Deploy the `dist` folder to any static hosting service.
+
+## Tech stack
+
+Vue 3, Pinia, Chart.js, SheetJS, Vite, Tailwind CSS, PWA-ready.
+
+## License
+
+MIT

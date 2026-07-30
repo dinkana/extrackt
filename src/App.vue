@@ -12,23 +12,21 @@
         :class="navClass('home')"
         class="flex flex-col items-center justify-center flex-1 h-full text-xs font-medium"
       >
-        Главная
+        Home
       </button>
-
       <button
         @click="ui.currentView = 'analytics'"
         :class="navClass('analytics')"
         class="flex flex-col items-center justify-center flex-1 h-full text-xs font-medium"
       >
-        Аналитика
+        Analytics
       </button>
-
       <button
         @click="ui.currentView = 'settings'"
         :class="navClass('settings')"
         class="flex flex-col items-center justify-center flex-1 h-full text-xs font-medium"
       >
-        Настройки
+        Settings
       </button>
     </nav>
   </div>
@@ -48,7 +46,7 @@ const entriesStore = useEntriesStore()
 
 onMounted(() => {
   if (!entriesStore.storageAvailable) {
-    alert('Ваш браузер не поддерживает локальное хранение')
+    alert('Your browser does not support local storage')
   }
 })
 

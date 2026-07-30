@@ -9,7 +9,6 @@ const STORAGE_KEY = 'state-tracker-entries'
 export const useEntriesStore = defineStore('entries', () => {
   const storageAvailable = isLocalStorageAvailable()
   const entries = ref(storageAvailable ? loadEntries() : [])
-
   const storageStatus = computed(() => checkStorageLimits(entries.value.length))
 
   function loadEntries() {
@@ -55,7 +54,6 @@ export const useEntriesStore = defineStore('entries', () => {
 
   function saveEntries() {
     if (!storageAvailable) return false
-
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(entries.value))
       return true
@@ -110,7 +108,6 @@ export const useEntriesStore = defineStore('entries', () => {
       } else {
         entries.value[index] = previous
       }
-
       return { success: false, error: 'quota' }
     }
 
